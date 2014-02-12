@@ -1,0 +1,348 @@
+<html>
+	<head>
+	<link rel="stylesheet" type="text/css" href="./clickykeysflavor.css"/>
+	<script type="text/javascript">
+		<!--// HTML comment followed by Javascript comment, in case a browser can't parse the Javascript.
+		/*
+		// ©
+		// Carlis Moore
+		// 30 December 2010 - 18 March 2011
+		// http://retl.info http://travisuped.com
+		// Travisuped at Gmail or Retl at Retl if you want to email me.
+		// You're free to do whatever tinkering you want with this stuff, but if it goes live on the web, I'd love a linkback or some notification of what you've done with it so I can check it out.
+		*/
+		
+		//Here's what an object template looks like:
+		/*
+		function person(aproperty)
+			{
+				//this.aproperty=aproperty;
+				//this.DoSomeStuff();
+			}
+		*/
+		
+		//To instantiate, simply call the constructor with new: 
+		// anInstance = new person(aproperty)
+		
+		//Something about this object is f*cked up.
+		
+		function squeaker(xpos, ypos, myid, mynum)
+		{
+			 this.x = xpos;
+			 this.y = ypos;
+			 this.xspeed = 5;
+			 this.yspeed = 1;
+			 this.myid = myid;
+       this.mynum = mynum;
+             
+       switch(mynum %10)
+       {
+       		case 0:
+       		this.myname = "Hyperbound";
+       		break;
+       		
+       		case 1:
+       		this.myname = "Mini-mimi";
+       		break;
+       		
+       		case 2:
+       		this.myname = "Doubles";
+       		break;
+       		
+       		case 3:
+       		this.myname = "Angel";
+       		break;
+       		
+       		case 4:
+       		this.myname = "Sue";
+       		break;
+       		
+       		case 5:
+       		this.myname = "Cream";
+       		break;
+
+       		case 6:
+       		this.myname = "Haruhi";
+       		break;
+
+       		case 7:
+       		this.myname = "Rabi-en-Rose";
+       		break;
+       		       
+       		case 8:
+       		this.myname = "Luna";
+       		break;
+       		
+       		case 9:
+       		this.myname = "Wrin";
+       		break;
+       		
+       		default:
+       		this.myname = "Bunn";
+       		break;
+       }
+		
+			this.updateBun = function()
+			{
+				if (this.y >= 500) 
+				{
+					this.y = 500;
+					rand = Math.floor(Math.random()*11); 
+					if (rand == 10){ rand *= 3;} 
+					else {rand = 3}
+					this.yspeed = -((this.yspeed / 2) + rand );
+				}
+				else {this.yspeed += 1;}
+				
+				if (this.xspeed > 0)
+				{
+					if (this.yspeed < 4  && this.yspeed > -4) {changeImg(this.myid,"./images/sqkr_blu_n_r.png")}
+					else if (this.yspeed <= -4) {changeImg(this.myid,"./images/sqkr_blu_up_r.png");}
+					else if (this.yspeed >= 4) {changeImg(this.myid,"./images/sqkr_blu_dn_r.png");}
+				}
+				else
+				{
+				if (this.yspeed < 4  && this.yspeed > -4) {changeImg(this.myid,"./images/sqkr_blu_n.png")}
+					else if (this.yspeed <= -4) {changeImg(this.myid,"./images/sqkr_blu_up.png");}
+					else if (this.yspeed >= 4) {changeImg(this.myid,"./images/sqkr_blu_dn.png");}
+				}
+				
+				if ( this.x < margin) {this.x += (window.innerWidth - margin);}
+				if ( this.x > (window.innerWidth - margin)) {this.x -= (window.innerWidth - margin);}
+				
+				this.x += this.xspeed;
+				this.y += this.yspeed;
+				
+				this.moveBun(this.myid);
+				
+			}
+			
+			this.moveBun = function(itemToChange)
+			{
+			document.getElementById(itemToChange).style.left = this.x + "px";
+			document.getElementById(itemToChange).style.top = this.y + "px";
+			if (document.getElementById(itemToChange).style.top > (window.innerHeight - margin)) 
+				{document.getElementById(itemToChange).style.top -= (window.innerHeight - margin) + "px";}
+			}
+			
+			this.nameBun = function(newName)
+			{
+			this.myname = newName;
+			return this.myname;
+			//= this.myname;
+			}
+			
+			this.movementAction = function(passedspeed)
+			{
+			this.yspeed = -passedspeed;
+			}
+			
+		
+		}
+		
+		
+		
+		//Here's a function definition looks like:
+		/*
+		function afunct()
+			{
+			//DoSomeStuff;
+			}
+		*/
+
+		function addSqueaker(typeOfSqueaker)
+		{
+			switch (typeOfSqueaker)
+			{
+			case 1:
+			var tempId = "image" + buns.length;
+			document.getElementById("theBigDiv").innerHTML += ('<img src="./images/sqkr_blu_n.png" id="' + tempId + '" style="position:absolute; left:0px; top:0px;" onMouseUp="pickSqueaker(' + buns.length + '); buns[selected].yspeed -= 7;" ><br>');
+			buns[buns.length] = new squeaker(200, 100, tempId, buns.length);
+			break;
+			
+			case 2:
+			break;
+			
+			case 3:
+			break;
+			
+			case 4:
+			break;
+			
+			default:
+			break;
+			
+			}
+			
+			pickSqueaker(buns.length - 1);
+		}
+		
+		function pickSqueaker(whichID)
+		{
+			selected = whichID;
+			document.getElementById("textOut").innerHTML = "Now observing:";
+			return document.forms[0].elements["textIn"].value = buns[selected].myname;
+		}
+		
+		function changeImg(itemToChange, imageSourcePath)
+		{
+			document.getElementById(itemToChange).src = imageSourcePath;
+		}
+
+		
+		/////////////////////////////////////////////////////////////////
+		// Moving from focusing on the characteristics of the Buns to user input.
+		function handleTextAreaInput(evt)
+		{
+			/*if (evt && evt.which)
+			{
+				if (evt.which == 13)
+				{
+					buns[selected].nameBun(document.getElementById("textDisplayArea").innerHTML);
+					//document.getElementById"textDisplayArea").innerHTML += "";
+				}
+			}*/
+		}
+
+		function submitResponse()
+		{
+			tempname = buns[selected].myname;
+			buns[selected].nameBun(document.forms[0].elements["textIn"].value);
+			document.getElementById("textOut").innerHTML = tempname + " renamed to " + document.forms[0].elements["textIn"].value + "."; //Letting the user know the name-change worked.
+			return false;
+		}		
+		/////////////////////////////////////////////////////////////////
+		// This is more or less our "Main" function, or the main LOOP rather.
+		function updateEverything()
+		{
+			for (i in buns)
+			{
+			buns[i].updateBun();
+			}
+			bunnCount = parseInt(i) + 1;
+			document.getElementsByTagName("p")[0].innerHTML= bunnCount + " Bunni";
+			
+			//Position the cursor near whichever if currently selected.
+            
+            if (cursorswitch) 
+                {
+                if (cursorYOffset > 12) {cursorswitch = 0;}
+                cursorYOffset += Math.ceil(  3 );
+                }
+            else 
+                {
+                if (cursorYOffset < -12) {cursorswitch = 1;}
+                cursorYOffset -= Math.ceil( 3 );
+                }
+            
+			document.getElementById("imgcursor").style.left = buns[selected].x - 13 + "px";
+			document.getElementById("imgcursor").style.top = (buns[selected].y - 112 + cursorYOffset) + "px";
+			
+			main = setTimeout("updateEverything();", timerspeed);
+		}
+				
+			
+		//HANDLING USER INPUT
+		//MOUSE
+		function noMouseDrag(e)
+		{
+			e.preventDefault();
+			return false;
+		}
+		
+		function handleMouseDown(e)
+		{
+			if (e)
+			{
+			noMouseDrag(e);
+			document.getElementById("testInfoDiv").innerHTML="Mouse click-down at relative position X: " + e.clientX + " Y: " +e.clientY;
+				
+			}
+		}
+		
+		function handleMouseUp(e)
+		{
+			if (e)
+			{
+			noMouseDrag(e);
+			document.getElementById("testInfoDiv").innerHTML="Mouse click-release at relative position X: " + e.clientX + " Y: " +e.clientY;				
+			}
+		}
+		
+		//HANDLING USER INPUT
+		//KEYBOARD
+		function handleKeyboard(e)
+		{
+			if (e && e.which)
+			{
+			
+			document.getElementById("testInfoDiv").innerHTML="Last recieved keycode from keypress: " + e.which;
+				
+				if (e.which == 37){p1cursor.moveCursor(0);}
+				if (e.which == 38){p1cursor.moveCursor(1);}
+				if (e.which == 39){p1cursor.moveCursor(2);}
+				if (e.which == 40){p1cursor.moveCursor(3);}
+				
+				if (e.which == 65){buns[selected].xspeed -= 2;}
+				if (e.which == 68){buns[selected].xspeed += 2;} //Watch out. Order swap here in the ASWD set.
+				if (e.which == 83){;}
+				
+				if (e.which == 32 || e.which == 87 || e.which == 16) //Spacebar, W key, Shift.
+				{
+					buns[selected].movementAction(12);
+				}
+				
+				if (e.which == 16) //Shift key.
+				{
+					quickAdvanceBlocks(p1board); //Advances the next line of blocks.
+				}
+				
+			}
+		}
+		//END OF USER INPUT HANDLING
+			
+			//Variables
+			var i;
+			var main;
+			var margin = 64;
+			var timerspeed = 50;
+			
+            var selected = 0;
+            
+            var cursorswitch = 1;
+            var cursorYOffset = 0;
+			
+			
+			
+			/////////////////////////////////////////////////////////////////
+			//Initializing some stuff just before the Main
+			var buns = new Array();
+			buns[0] = new squeaker(100,200,"image0", 0);
+			//buns[1] = new squeaker(200,100,"image1", 1);
+			
+			
+			//Main loop here! Loops are done with Timeouts in JS as opposed to C#'s approach.
+			main = setTimeout("updateEverything();", timerspeed);
+			
+		//-->
+	</script>
+	</head>
+	<body onkeydown="handleKeyboard(event);" onmousedown="handleMouseDown(event);" onmouseup="handleMouseUp(event);" style="background-image:url(./phi/mlpbg1.png)">
+	<div id="testInfoDiv"></div>
+	<div id="theBigDiv">
+	<p>Bunn</p>
+	<!--
+	<img src = "./images/sqkr_blu_add.png" onClick = "addSqueaker(1)";>
+	-->
+	<form  onSubmit="return submitResponse();">
+	
+		<p id="textOut">Click a critter! Any critter!</p>
+		<input type="text" name="textIn" value="(Type + enter to rename.)"/>
+	</form>
+		
+		<br>
+			<img src="./images/crsr_blu.gif" id="imgcursor" style="position:absolute; left:0px; top:0px;"><br>
+			<img src="./images/sqkr_blu_n.png" id="image0" style="position:absolute; left:0px; top:0px;" onMouseUp="pickSqueaker(0); buns[selected].yspeed = -12;"><br>
+	</div>
+	</body>
+</html>
