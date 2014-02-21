@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<!--
+// File: ffxiiiatb.htm
+// Author: Carlis Moore
+// Date of Creation: 11 March 2013
+// Date of Last Update: 11 March 2013
+// Purpose: To emulate the 'ATB Refresh' aspect of FFXIII's ATB system.
+// This is also repurposing a bunch of cobbled together code from w3schools and
+// elsewhere on the net to do things with arcs on an html canvas.
+// Biggest thing I personally got out of this as of 11Mar2013 is my first use of
+// of setInterval instead of setTimeout.
+//
+// Funny. My intial goal was to do a top-down Contra-type rotate-y thing.
+// Oh well. Progress.
+-->
+<html>
+<head>
+<meta charset="utf-8" />
+<title>FFXIII-Style ATB</title>
+<script type="text/javascript" src="./ffxiiiatb.js"></script>
+
+<script>
+	var main;
+	var timerspeed = 1000/30; //1000 miliseconds is one second. Divide by 30 for 30updates per second.
+	mainTimer = setInterval("updateEverything();", timerspeed);
+	var p1 = new player(200, 200, 0, 0); //Keyword new is necessary to instantiate.
+	
+	var imgRipple = new Image;
+	imgRipple.src='./images/ripple.png'; //The page will blow up if we don't load the image data before we get to the draw. Betyter to put the images in the onload or header somewhere.
+</script>
+
+</head>
+<body onkeydown="handleKeyboard(event);">
+<div id="mainDiv" onmousemove="updateMousePosition(event)" >
+<canvas id="mainCanvas" width="800" height="600"></canvas>
+</div>
+<script>
+testDrawRect(); 
+testDrawCircle();
+</script>
+</body>
+</html>
