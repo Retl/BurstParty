@@ -54,7 +54,7 @@ function player(xpos, ypos, myid, mynum)
 			
 				this.xspeed += 16;//Testing line. DELETEME.
 				//if (xspeed > 768) {xspeed -= 48;}
-				this.yspeed = 16;//Another DELETEME testing line.
+				this.yspeed = 256;//Another DELETEME testing line.
 			
 				//Each update, we immediately need to update positions relative to speed.
 				this.xsub += this.xspeed;
