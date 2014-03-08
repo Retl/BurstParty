@@ -3,7 +3,7 @@
 // File: burstparty.htm
 // Author: Carlis Moore
 // Date of Creation: 20 February 2014
-// Date of Last Update: 20 February 2014
+// Date of Last Update: March 8 2014
 // Base Code: http://retl.info/experimental/ffxiiiatb.htm
 // Purpose: To make a game similar to the "Balloon Popping" mini-battle from Yoshi's Island.
 // This is also repurposing a bunch of cobbled together code from w3schools and
@@ -16,6 +16,8 @@
 <head>
 <meta charset="utf-8" />
 <title>Burst Party Mini Battle</title>
+<link rel="stylesheet" type="text/css" href="./clickykeysflavor.css"/>
+<link rel="stylesheet" type="text/css" href="./stable45.css"/>
 <script type="text/javascript" src="./burstparty.js"></script>
 
 <script>
@@ -32,6 +34,16 @@
 <body onkeydown="handleKeyboard(event);">
 <div id="mainDiv" onmousemove="updateMousePosition(event)" >
 <canvas id="mainCanvas" width="800" height="600"></canvas>
+</div>
+<div id="extras">
+<a class="hexButton" href="#">Home</a>
+<a class="hexButton" href="#">Setting</a>
+<a class="hexButton" href="#">Characters</a>
+<a class="hexButton" href="#">Stories</a>
+<a class="hexButton" href="#">Roleplay</a>
+<a class="hexButton" href="#">FUN!</a>
+<a class="hexButton" href="#">Contact</a>
+<a class="hexButton" href="#">About</a>
 </div>
 <script>
 testDrawRect(); 
