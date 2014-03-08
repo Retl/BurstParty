@@ -1,0 +1,34 @@
+.hexButton
+{
+background-image:url('../images/hexagon_button_bg.png');
+background-repeat:no-repeat;
+background-position:center center;
+
+text-align:center;
+line-height:127px;
+
+font-size: 14px;
+
+width:127px;
+height:127px;
+padding:63px;
+border:0px;
+margin:0px;
+}
+
+a:hover.hexButton
+{
+background-image:url('../images/hexagon_button_bgh.png');
+}
+
+a:active.hexButton
+{
+background-image:url('../images/hexagon_button_bga.png');
+}
+
+a:visited.hexButton
+{
+background-image:url('../images/hexagon_button_bgv.png');
+}
+
+
