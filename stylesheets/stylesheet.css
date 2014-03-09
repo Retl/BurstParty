@@ -1,3 +1,20 @@
+/*
+Page Author: ??? & Carlis Moore
+Creation Date: 8 March 2014
+Last Modified:  8 March 2014
+Purpose: This sheet was included as part of a pre-generated template with Github Pages. I don't know who the original author of that template was. I tweaked some parts a little to better suit the look I was going for with the site, but most of this sheet is not mine.
+*/
+
+/*
+Color Key:
+Yellow: f8f796
+Pink: fab3d1
+Blue: 96adf8
+Yellow Light: fcfcea
+Pink Light: fceaf4
+Blue Light: eaeafc
+*/
+
 body {
   margin: 0;
   padding: 0;
@@ -38,7 +55,7 @@ li {
 header {
   background: rgba(0, 0, 0, 0.1);
   width: 100%;
-  border-bottom: 1px dashed #b5e853;
+  border-bottom: 1px dashed #fab3d1;
   padding: 20px 0;
   margin: 0 0 40px 0;
 }
@@ -49,7 +66,7 @@ header h1 {
   margin: 0 0 0 -40px;
   font-weight: bold;
   font-family: Monaco, "Bitstream Vera Sans Mono", "Lucida Console", Terminal, monospace;
-  color: #b5e853;
+  color: #fab3d1;
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1),
                0 0 5px rgba(181, 232, 83, 0.1),
                0 0 10px rgba(181, 232, 83, 0.1);
@@ -88,7 +105,7 @@ section img {
 h1, h2, h3, h4, h5, h6 {
   font-weight: normal;
   font-family: Monaco, "Bitstream Vera Sans Mono", "Lucida Console", Terminal, monospace;
-  color: #b5e853;
+  color: #fab3d1;
   letter-spacing: -0.03em;
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1),
                0 0 5px rgba(181, 232, 83, 0.1),
@@ -137,7 +154,7 @@ ul li:before {
   content: ">>";
   font-family: Monaco, "Bitstream Vera Sans Mono", "Lucida Console", Terminal, monospace;
   font-size: 13px;
-  color: #b5e853;
+  color: #fab3d1;
   margin-left: -37px;
   margin-right: 21px;
   line-height: 16px;
@@ -154,7 +171,7 @@ pre {
   border: 1px solid rgba(255, 255, 255, 0.15);
   padding: 10px;
   font-size: 14px;
-  color: #b5e853;
+  color: #fab3d1;
   border-radius: 2px;
   -moz-border-radius: 2px;
   -webkit-border-radius: 2px;
@@ -170,7 +187,7 @@ table {
 
 th {
   text-align: left;
-  border-bottom: 1px dashed #b5e853;
+  border-bottom: 1px dashed #fab3d1;
   padding: 5px 10px;
 }
 
@@ -181,8 +198,8 @@ td {
 hr {
   height: 0;
   border: 0;
-  border-bottom: 1px dashed #b5e853;
-  color: #b5e853;
+  border-bottom: 1px dashed #fab3d1;
+  color: #fab3d1;
 }
 
 /* Buttons
