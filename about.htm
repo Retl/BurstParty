@@ -1,13 +1,10 @@
 <!DOCTYPE html>
 <html>
 	<!--
-	Author: Carlis Moore
-	Date of Creation: 20 February 2014
-	Date of Last Update: 8 March 2014
-	Base Code: http://retl.info/experimental/ffxiiiatb.htm
-	Purpose: To make a game similar to the "Balloon Popping" mini-battle from Yoshi's Island using the characters and settings of Stable 45.
-	This is also repurposing a bunch of cobbled together code from w3schools and
-	elsewhere on the net to do things with arcs on an html canvas.
+	Page Author: Carlis Moore
+	Creation Date: 8 March 2014
+	Last Modified: 8 April 2014
+	Purpose: This is the Stable 45 about page. It gives more detailed information about what the Stable 45 website is and intends to do.
 
 	Permissions: If you want to use elements from this page, please ask me first. I'm generally pretty open and willing to share, but it's better to ask than to not. You can email me at travisuped@gmail.com.  storytime@revelromp.com also works.
 
@@ -24,20 +21,11 @@
 	
 	<script charset="utf-8" type="text/javascript" src="javascripts/stable45.js"></script>
 
-    <title>Stable45.BurstParty() by Retl</title>
-	<script type="text/javascript" src="./burstparty.js"></script>
-	<script>
-		var main;
-		var timerspeed = 1000/60; //1000 miliseconds is one second. Divide by 60 for 60updates per second.
-		mainTimer = setInterval("updateEverything();", timerspeed);
-		var p1 = new player(200, 200, 0, 0); //Keyword new is necessary to instantiate.
-		
-		var imgRipple = new Image;
-		imgRipple.src='./images/ripple.png'; //The page will blow up if we don't load the image data before we get to the draw. Betyter to put the images in the onload or header somewhere.
-	</script>
+    <title>Stable45.About() by Retl</title>
   </head>
 
-  <body onLoad="displayCopyrightAndLastUpdated(); quicknav.innerHTML = ''; quicknav.innerHTML += getQuicknavLinks();" onkeydown="handleKeyboard(event);">
+  <body onLoad="displayCopyrightAndLastUpdated(); quicknav.innerHTML = ''; quicknav.innerHTML += getQuicknavLinks();">
+
     <header>
       <div class="container">
         <h1>Stable45</h1>
@@ -56,17 +44,17 @@
 		</nav>
 		  </div>
 		</header>
+
     <div class="container">
       <section id="main_content">
-        <h3><a name="burst-party" class="anchor" href="burst-party"><span class="octicon octicon-link"></span></a>Stable 45: Burst Party!</h3>
-			<div id="mainDiv" onmousemove="updateMousePosition(event)" >
-			<canvas id="mainCanvas" width="800" height="600" onLoad="if(isUserOnMobile()){requestFullscreen();}"></canvas>
-			<a href="#" onClick="if(isUserOnMobile()){webkitRequestFullscreen();}">Go Fullscreen</a>
-			</div>
-			<script>
-			testDrawRect(); 
-			testDrawCircle();
-			</script>
+        <h3>
+<a name="about-stable-45" class="anchor" href="#welcome-to-stable-45"><span class="octicon octicon-link"></span></a>About Stable 45.</h3>
+
+<p>Stable 45 is a website about the fictional Stable Lab 45 Center of Reserch and Development of Entertainment Technology and its inhabitants. It is primarily intended to entertain teenagers that like silly, whimsical scenarioes with stories and games, as well as provide information to facilitate roleplay within the setting.</p>
+
+<p>Stable 45 also includes short sketch-stories as well as games that flesh out the scenario. The stories will have copies hosted on-site as well as links to Google Docs copies.</p>
+
+<p>If you wish to contact me- the site's creator- about the site, you can reach me at travisuped@gmail.com. There's also a contact form to fill out the email for you <a href="contact.htm">here</a>.</p>
       </section>
     </div>
 

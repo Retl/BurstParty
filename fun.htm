@@ -1,13 +1,10 @@
 <!DOCTYPE html>
 <html>
 	<!--
-	Author: Carlis Moore
-	Date of Creation: 20 February 2014
-	Date of Last Update: 8 March 2014
-	Base Code: http://retl.info/experimental/ffxiiiatb.htm
-	Purpose: To make a game similar to the "Balloon Popping" mini-battle from Yoshi's Island using the characters and settings of Stable 45.
-	This is also repurposing a bunch of cobbled together code from w3schools and
-	elsewhere on the net to do things with arcs on an html canvas.
+	Page Author: Carlis Moore
+	Creation Date: 8 March 2014
+	Last Modified: 8 April 2014
+	Purpose: This is the Stable 45 FUN page. It has the games and download links.
 
 	Permissions: If you want to use elements from this page, please ask me first. I'm generally pretty open and willing to share, but it's better to ask than to not. You can email me at travisuped@gmail.com.  storytime@revelromp.com also works.
 
@@ -24,20 +21,11 @@
 	
 	<script charset="utf-8" type="text/javascript" src="javascripts/stable45.js"></script>
 
-    <title>Stable45.BurstParty() by Retl</title>
-	<script type="text/javascript" src="./burstparty.js"></script>
-	<script>
-		var main;
-		var timerspeed = 1000/60; //1000 miliseconds is one second. Divide by 60 for 60updates per second.
-		mainTimer = setInterval("updateEverything();", timerspeed);
-		var p1 = new player(200, 200, 0, 0); //Keyword new is necessary to instantiate.
-		
-		var imgRipple = new Image;
-		imgRipple.src='./images/ripple.png'; //The page will blow up if we don't load the image data before we get to the draw. Betyter to put the images in the onload or header somewhere.
-	</script>
+    <title>Stable45.FUN() by Retl</title>
   </head>
 
-  <body onLoad="displayCopyrightAndLastUpdated(); quicknav.innerHTML = ''; quicknav.innerHTML += getQuicknavLinks();" onkeydown="handleKeyboard(event);">
+  <body onLoad="displayCopyrightAndLastUpdated(); quicknav.innerHTML = ''; quicknav.innerHTML += getQuicknavLinks();">
+
     <header>
       <div class="container">
         <h1>Stable45</h1>
@@ -56,17 +44,19 @@
 		</nav>
 		  </div>
 		</header>
+
     <div class="container">
       <section id="main_content">
-        <h3><a name="burst-party" class="anchor" href="burst-party"><span class="octicon octicon-link"></span></a>Stable 45: Burst Party!</h3>
-			<div id="mainDiv" onmousemove="updateMousePosition(event)" >
-			<canvas id="mainCanvas" width="800" height="600" onLoad="if(isUserOnMobile()){requestFullscreen();}"></canvas>
-			<a href="#" onClick="if(isUserOnMobile()){webkitRequestFullscreen();}">Go Fullscreen</a>
-			</div>
-			<script>
-			testDrawRect(); 
-			testDrawCircle();
-			</script>
+			<a name="about-stable-45" class="anchor" href="#welcome-to-stable-45"><span class="octicon octicon-link"></span></a><h3>Games, Downloads, and Other Stable 45 Fun.</h3>
+
+			<p>If you want to play games or download the content from the site, this is the place to do it.</p>
+		</section>
+
+	<section id="downloads">
+          <a href="burstparty.htm" class="btn">Play Burst Party</a><br />
+		  <a href="https://github.com/Retl/stable45/zipball/master" class="btn">Download as .zip</a>
+          <a href="https://github.com/Retl/stable45/tarball/master" class="btn">Download as .tar.gz</a>
+          <a href="https://github.com/Retl/stable45" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
       </section>
     </div>
 

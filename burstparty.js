@@ -1,7 +1,7 @@
 // File: burstparty.js
 // Author: Carlis Moore
 // Date of Creation: 20 February 2014
-// Date of Last Update: 20 February 2014
+// Date of Last Update: 8 March 2014
 // Base Code: http://retl.info/experimental/ffxiiiatb.js
 // Purpose: Same as listed in .htm. This is a chunk of the JS that makes it go.
 
