@@ -25,6 +25,36 @@ Permissions: If you want to use elements from this page, please ask me first. I'
 	margin:0px;
 }
 
+.floatingProfileImage
+{
+	float:left;
+	padding:0px;
+	margin-right:6px;
+	text-align:center;
+	height:100px;
+}
+
+.floatingSettlementImage
+{
+	float:left;
+	padding:0px;
+	margin-right:6px;
+	text-align:center;
+	height:200px;
+}
+
+.profileDiv
+{
+	height:100px;
+	padding:6px;
+}
+
+.settlementDiv
+{
+	height:200px;
+	padding:6px;
+}
+
 a:hover.hexButton
 {
 	background-image:url('../images/hexagon_button_bgh.png');

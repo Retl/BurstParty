@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+	<!--
+	Author: Carlis Moore
+	Date of Creation: 20 February 2014
+	Date of Last Update: 8 March 2014
+	Base Code: http://retl.info/experimental/ffxiiiatb.htm
+	Purpose: To make a game similar to the "Balloon Popping" mini-battle from Yoshi's Island using the characters and settings of Stable 45.
+	This is also repurposing a bunch of cobbled together code from w3schools and
+	elsewhere on the net to do things with arcs on an html canvas.
+
+	Permissions: If you want to use elements from this page, please ask me first. I'm generally pretty open and willing to share, but it's better to ask than to not. You can email me at travisuped@gmail.com.  storytime@revelromp.com also works.
+
+	Memo: N/A
+	-->
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/stable45.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+	
+	<script charset="utf-8" type="text/javascript" src="javascripts/stable45.js"></script>
+
+    <title>Stable45.BurstParty() by Retl</title>
+	<script type="text/javascript" src="./burstparty.js"></script>
+	<script>
+		var main;
+		var timerspeed = 1000/60; //1000 miliseconds is one second. Divide by 60 for 60updates per second.
+		mainTimer = setInterval("updateEverything();", timerspeed);
+		var p1 = new player(200, 200, 0, 0); //Keyword new is necessary to instantiate.
+		
+		var imgRipple = new Image;
+		imgRipple.src='./images/ripple.png'; //The page will blow up if we don't load the image data before we get to the draw. Betyter to put the images in the onload or header somewhere.
+	</script>
+  </head>
+
+  <body onLoad="displayCopyrightAndLastUpdated(); quicknav.innerHTML = ''; quicknav.innerHTML += getQuicknavLinks();" onkeydown="handleKeyboard(event);">
+    <header>
+      <div class="container">
+        <h1>Stable45</h1>
+        <h2>Silly horses play silly games.</h2>
+		<nav id="navigation" class="navbar">
+			
+			<a class="hexButton" href="index.htm" style="position:absolute;left:0px;top:0px;">Home</a>
+			<a class="hexButton" href="setting.htm" style="position:absolute;left:55px;top:95px;">Setting</a>
+			<a class="hexButton" href="characters.htm" style="position:absolute;left:111px;top:0px;">Characters</a>
+			<a class="hexButton" href="stories.htm" style="position:absolute;left:166px;top:95px;">Stories</a>
+			<a class="hexButton" href="roleplay.htm" style="position:absolute;left:222px;top:0px;">Roleplay</a>
+			<a class="hexButton" href="fun.htm" style="position:absolute;left:277px;top:95px;">FUN!</a>
+			<a class="hexButton" href="contact.htm" style="position:absolute;left:333px;top:0px;">Contact</a>
+			<a class="hexButton" href="about.htm" style="position:absolute;left:388px;top:95px;">About</a>
+			
+		</nav>
+		  </div>
+		</header>
+    <div class="container">
+      <section id="main_content">
+        <h3><a name="burst-party" class="anchor" href="burst-party"><span class="octicon octicon-link"></span></a>Stable 45: Burst Party!</h3>
+			<div id="mainDiv" onmousemove="updateMousePosition(event)" >
+			<canvas id="mainCanvas" width="800" height="600"></canvas>
+			</div>
+			<script>
+			testDrawRect(); 
+			testDrawCircle();
+			</script>
+      </section>
+    </div>
+
+    <footer id="footer">
+<!-- Section: Footer. 
+Bottom Quicknav links. 
+-->
+<nav id="quicknav"><a href="about.htm">About</a>&nbsp;~&nbsp; <a href="characters.htm">Characters</a>&nbsp;~&nbsp; <a href="contact.htm">Contact</a>&nbsp;~&nbsp; <a href="fun.htm">FUN!</a>&nbsp;~&nbsp; <a href="index.htm">Home</a>&nbsp;~&nbsp; <a href="setting.htm">Setting</a>&nbsp;~&nbsp; <a href="stories.htm">Stories</a>&nbsp;~&nbsp; <a href="roleplay.htm">Roleplay</a>&nbsp;~&nbsp;</nav>
+	
+<!-- Section: Footer. 
+Last modified and any copyright info goes here. 
+-->
+ 
+
+</footer>
+  </body>
+</html>

@@ -18,7 +18,7 @@
 	{
 		var output = "";
 		output += "<p>";
-		output += "The HTML, CSS, and Javascript code presenting this page to you are &copy; Carlis Moore 2013 unless otherwise noted in the source. The stories presented here are works of fiction and are not intended to be taken as truths."
+		output += "The HTML, CSS, and Javascript code presenting this page to you are &copy; Carlis Moore 2014 unless otherwise noted in the source. The stories presented here are works of fiction and are not intended to be taken as truths."
 		output += "<br />";
 		output += "&gt;This document was last modified "+ document.lastModified.substring(0,10)+ "&lt;";
 		output += "</p>";
@@ -29,7 +29,7 @@
 	{
 		var output = "";
 		output += "<p>";
-		output += "The code of this page is &copy; Carlis Moore 2013. The MP3 are made via Zamzar.com. The stories belong to their individual authors."
+		output += "This page is &copy; Carlis Moore 2014 unless otherwise noted. The stories here are fiction."
 		output += "<br />";
 		output += "&gt;This document was last modified "+ document.lastModified.substring(0,10)+ "&lt;";
 		output += "</p>";
