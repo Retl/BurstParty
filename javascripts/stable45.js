@@ -52,6 +52,19 @@
 		
 		return output;
 	}
+	
+	//This next function is based on a discussion over on stackoverflow. Their implmentation is a good bit more thorough than mine. Reference: <http://stackoverflow.com/questions/11381673/javascript-solution-to-detect-mobile-browser>
+	function isUserOnMobile() 
+	{ 
+		if( navigator.userAgent.match(/Android/i) || navigator.userAgent.match(/Windows Phone/i))
+		{
+			return true;
+		}
+		else 
+		{
+			return false;
+		}
+	}
 //-->
 
   
