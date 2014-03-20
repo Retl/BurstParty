@@ -310,16 +310,6 @@ function drawRectAtb(char)
 	
 	//ATB Reserve Ready!
 	if (p1.rap >= p1.apMax) {drawText(24, mainCanvas.height - 128, "!");}
-	
-	//Just added this here - DELETEME OR AT LEAST FIXME TODO
-	drawHexagon(0, 0);
-	drawHexagonScaled(64, 0, 2);
-	
-	whichSide = Math.floor(Math.random()*6) + 1
-	drawHexagonSide(96, 3, whichSide);
-	whichSide = Math.floor(Math.random()*6) + 1
-	drawHexagonSideScaled(128, 0, whichSide, 2);
-	
 }
 
 function testDrawCircle() 
@@ -337,106 +327,6 @@ function clearDisplay()
 	var ctx=c.getContext("2d");
 	ctx.clearRect(0, 0, c.width, c.height);
 }
-
-function drawHexagon(x, y)
-{
-var c=document.getElementById("mainCanvas");
-var ctx=c.getContext("2d");
-//ctx.fillStyle = '#f00';
-ctx.strokeStyle="#FFFFFF";
-ctx.beginPath();
-ctx.moveTo(x + 15, y + 8);
-ctx.lineTo(x + 9, y + 12);
-ctx.lineTo(x + 9, y + 19);
-ctx.lineTo(x + 15, y + 23);
-ctx.lineTo(x + 16, y + 23);
-ctx.lineTo(x + 22, y + 19);
-ctx.lineTo(x + 22, y + 12);
-ctx.lineTo(x + 16, y + 8);
-
-/*
-ctx.moveTo(x + 0, y + 0);
-ctx.lineTo(x + 100, y + 50);
-ctx.lineTo(x + 50, y + 100);
-ctx.lineTo(x + 0, y + 90);
-*/
-ctx.closePath();
-//ctx.fill();
-ctx.stroke();
-}
-
-function drawHexagonScaled(x, y, scale)
-{
-var c=document.getElementById("mainCanvas");
-var ctx=c.getContext("2d");
-//ctx.fillStyle = '#f00';
-ctx.strokeStyle="#FFFFFF";
-ctx.beginPath();
-ctx.moveTo(x + (15 * scale), y + (8 * scale));
-ctx.lineTo(x + (9 * scale), y + (12 * scale));
-ctx.lineTo(x + (9 * scale), y + (19 * scale));
-ctx.lineTo(x + (15 * scale), y + (23 * scale));
-ctx.lineTo(x + (16 * scale), y + (23 * scale));
-ctx.lineTo(x + (22 * scale), y + (19 * scale));
-ctx.lineTo(x + (22 * scale), y + (12 * scale));
-ctx.lineTo(x + (16 * scale), y + (8 * scale));
-ctx.closePath();
-ctx.stroke();
-}
-
-function drawHexagonSideScaled(x, y, side , scale)
-{
-var c=document.getElementById("mainCanvas");
-var ctx=c.getContext("2d");
-//ctx.fillStyle = '#f00';
-ctx.strokeStyle="#FFFFFF";
-ctx.beginPath();
-switch (side)
-	{
-	case 1:
-		ctx.moveTo(x + (15 * scale), y + (8 * scale));
-		ctx.lineTo(x + (9 * scale), y + (12 * scale));
-		break;
-	case 2:
-		ctx.moveTo(x + (9 * scale), y + (12 * scale));
-		ctx.lineTo(x + (9 * scale), y + (19 * scale));
-		break;
-	case 3:
-		ctx.moveTo(x + (9 * scale), y + (19 * scale));
-		ctx.lineTo(x + (15 * scale), y + (23 * scale));
-		break;
-	case 4:
-		ctx.moveTo(x + (16 * scale), y + (23 * scale));
-		ctx.lineTo(x + (22 * scale), y + (19 * scale));
-		break;
-	case 5:
-		ctx.moveTo(x + (22 * scale), y + (19 * scale));
-		ctx.lineTo(x + (22 * scale), y + (12 * scale));
-		break;
-	case 6:
-		ctx.moveTo(x + (22 * scale), y + (12 * scale));
-		ctx.lineTo(x + (16 * scale), y + (8 * scale));
-		break;
-	default:
-		ctx.moveTo(x + (15 * scale), y + (8 * scale));
-		ctx.lineTo(x + (9 * scale), y + (12 * scale));
-		ctx.lineTo(x + (9 * scale), y + (19 * scale));
-		ctx.lineTo(x + (15 * scale), y + (23 * scale));
-		ctx.lineTo(x + (16 * scale), y + (23 * scale));
-		ctx.lineTo(x + (22 * scale), y + (19 * scale));
-		ctx.lineTo(x + (22 * scale), y + (12 * scale));
-		ctx.lineTo(x + (16 * scale), y + (8 * scale));
-		break;
-	}
-ctx.closePath();
-ctx.stroke();
-}
-
-function drawHexagonSide(x, y, side)
-{
-	drawHexagonSideScaled(x, y, side, 1)
-}
-
 
 function drawCircle(x,y,r) 
 {
