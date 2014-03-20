@@ -116,6 +116,16 @@ function player(xpos, ypos, myid, mynum)
 			drawImg(32, mainCanvas.height - 256, imgRipple);
 			drawRectAtb(p1);
 			
+			//Playing around with animated Hexagons.
+			drawHexagon(0, 0);
+			drawHexagonScaled(64, 0, 2);
+	
+			whichSide = Math.floor(Math.random()*6) + 1
+			drawHexagonSide(96, 3, whichSide);
+			countCycles += 1;
+			whichSide = (countCycles % 6) + 1;
+			drawHexagonSideScaled(128, 0, whichSide, 2);
+			
 			//Demonstration related text.
 			drawTextSmall(32, 128, "A pale imitation of some aspects of the FFXIII ATB (and an unrelated circle thing)."); 
 			drawTextSmall(32, 144, "Press the 1(!) key to drain 100 points of ACT.");
@@ -310,15 +320,6 @@ function drawRectAtb(char)
 	
 	//ATB Reserve Ready!
 	if (p1.rap >= p1.apMax) {drawText(24, mainCanvas.height - 128, "!");}
-	
-	//Just added this here - DELETEME OR AT LEAST FIXME TODO
-	drawHexagon(0, 0);
-	drawHexagonScaled(64, 0, 2);
-	
-	whichSide = Math.floor(Math.random()*6) + 1
-	drawHexagonSide(96, 3, whichSide);
-	whichSide = Math.floor(Math.random()*6) + 1
-	drawHexagonSideScaled(128, 0, whichSide, 2);
 	
 }
 
