@@ -34,11 +34,14 @@
 		var p1 = new player(200, 200, 0, 0); //Keyword new is necessary to instantiate.
 		
 		var imgRipple = new Image;
-		imgRipple.src='./images/ripple.png'; //The page will blow up if we don't load the image data before we get to the draw. Betyter to put the images in the onload or header somewhere.
+		imgRipple.src='./images/ripple.png';
+
+		var imgFirstPostDownHard = new Image;
+		imgFirstPostDownHard.src='./images/fp_downhard.png';		//The page will blow up if we don't load the image data before we get to the draw. Better to put the images in the onload or header somewhere.
 	</script>
   </head>
 
-  <body onLoad="displayCopyrightAndLastUpdated(); quicknav.innerHTML = ''; quicknav.innerHTML += getQuicknavLinks();" onkeydown="handleKeyboard(event);">
+  <body onLoad="displayCopyrightAndLastUpdated(); quicknav.innerHTML = ''; quicknav.innerHTML += getQuicknavLinks();" onkeydown="handleKeyboard(event);" onmousedown="handleMouseDown(event);" onmouseup="handleMouseUp(event);">
     <header>
       <div class="container">
         <h1>Stable45</h1>

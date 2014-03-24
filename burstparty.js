@@ -26,6 +26,7 @@ function player(xpos, ypos, myid, mynum)
 			 this.yspeed = 1; //In Subpixels.
 			 this.myid = myid;
 			 this.mynum = mynum;
+			 
 			 this.apMax = 400;
 			 this.ap = this.apMax;
 			 this.rap = 0; //Reserve AP.
@@ -48,13 +49,12 @@ function player(xpos, ypos, myid, mynum)
 			return this.ap;
 			}
 			
+			//This is a method that should be called on each object of this type every loop. It's similar to 'step' in Gamemaker or Update() in Unity 3D. - Moore
 			this.update = update;
 			function update()
 			{
-			
-				this.xspeed += 16;//Testing line. DELETEME.
-				//if (xspeed > 768) {xspeed -= 48;}
-				this.yspeed = 256;//Another DELETEME testing line.
+				if (this.xspeed > 768) {this.xspeed -= 32;} 
+				if (this.xspeed < -768) {this.xspeed += 32;} //This enforces a maximum speed by dropping the speed then ramping back up on hitting the limit. - Moore
 			
 				//Each update, we immediately need to update positions relative to speed.
 				this.xsub += this.xspeed;
@@ -113,7 +113,7 @@ function player(xpos, ypos, myid, mynum)
 			drawCircle(mainCanvas.width / 2, mainCanvas.height / 2, calcDistance(mainCanvas.width / 2, mainCanvas.height / 2, p1.x, p1.y));
 			drawCircleMarker(p1.x, p1.y);
 			
-			drawImg(32, mainCanvas.height - 256, imgRipple);
+			drawImg(p1.x, p1.y, imgFirstPostDownHard);
 			drawRectAtb(p1);
 			
 			//Playing around with animated Hexagons.
@@ -135,6 +135,35 @@ function player(xpos, ypos, myid, mynum)
 			
 			//mainTimer = setTimeout("updateEverything();", timerspeed); //Not necessary when using setInterval to ensure a loop.
 		}
+		
+		
+		//HANDLING USER INPUT
+		//MOUSE
+		function noMouseDrag(e)
+		{
+			e.preventDefault();
+			return false;
+		}
+		
+		function handleMouseDown(e)
+		{
+			if (e)
+			{
+			noMouseDrag(e);
+			//document.getElementById("testInfoDiv").innerHTML="Mouse click-down at relative position X: " + e.clientX + " Y: " +e.clientY;
+				
+			}
+		}
+		
+		function handleMouseUp(e)
+		{
+			if (e)
+			{
+			noMouseDrag(e);
+			//document.getElementById("testInfoDiv").innerHTML="Mouse click-release at relative position X: " + e.clientX + " Y: " +e.clientY;				
+			}
+		}
+		//END OF USER INPUT HANDLING
 		
 //Free Utility Methods
 //Wrapping/clamping Pixel to Subpixel.
@@ -168,7 +197,7 @@ function clampSubPosToMain(p, upperBounds, lowerBounds)
 		p.xsub -= upperBounds;
 	}
 	
-	while (this.xsub < lowerBounds)
+	while (p.xsub < lowerBounds)
 	{
 		p.x--;
 		p.xsub += upperBounds;
@@ -180,7 +209,7 @@ function clampSubPosToMain(p, upperBounds, lowerBounds)
 		p.ysub -= upperBounds;
 	}
 	
-	while (this.ysub < lowerBounds)
+	while (p.ysub < lowerBounds)
 	{
 		p.y--;
 		p.ysub += upperBounds;
@@ -247,6 +276,20 @@ function handleKeyboard(e)
 		{
 			;
 		}
+		
+		//START Controlling and moving the player around - Moore
+		if (p1 != null)
+		{
+			if (e.which == 65){p1.xspeed -= 16;}
+			if (e.which == 68){p1.xspeed += 16;} //Watch out. Order swap here in the ASWD set.
+			if (e.which == 83){;}
+			
+			if (e.which == 32 || e.which == 87 || e.which == 16) //Spacebar, W key, Shift.
+			{
+				p1.yspeed -= 756;
+			}
+		}
+		//END of Controlling and moving the player - Moore
 		
 		
 		//Getting the Reserve AP is an All-or-Nothing bid.
