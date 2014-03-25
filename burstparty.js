@@ -55,6 +55,12 @@ function player(xpos, ypos, myid, mynum)
 			{
 				if (this.xspeed > 768) {this.xspeed -= 32;} 
 				if (this.xspeed < -768) {this.xspeed += 32;} //This enforces a maximum speed by dropping the speed then ramping back up on hitting the limit. - Moore
+				
+				if (this.yspeed > 2048) {this.yspeed = 2048;}
+				if (this.yspeed < -2048) {this.yspeed = -2048;}
+				
+				//Gravity pulls down.
+				this.yspeed += 40; //Might want to put a toggle based on the input here to make it 40 on low or 160 on holding down / releasing up. 
 			
 				//Each update, we immediately need to update positions relative to speed.
 				this.xsub += this.xspeed;
@@ -113,7 +119,7 @@ function player(xpos, ypos, myid, mynum)
 			drawCircle(mainCanvas.width / 2, mainCanvas.height / 2, calcDistance(mainCanvas.width / 2, mainCanvas.height / 2, p1.x, p1.y));
 			drawCircleMarker(p1.x, p1.y);
 			
-			drawImg(p1.x, p1.y, imgFirstPostDownHard);
+			drawImg(p1.x, p1.y, imgbb16);
 			drawRectAtb(p1);
 			
 			//Playing around with animated Hexagons.
@@ -280,13 +286,19 @@ function handleKeyboard(e)
 		//START Controlling and moving the player around - Moore
 		if (p1 != null)
 		{
-			if (e.which == 65){p1.xspeed -= 16;}
-			if (e.which == 68){p1.xspeed += 16;} //Watch out. Order swap here in the ASWD set.
+			if (e.which == 65){p1.xspeed -= 16;} // A key
+			if (e.which == 68){p1.xspeed += 16;} // D key
+			if (e.which != 68 && e.which != 65) //Neither A or D
+				{
+					if (p1.xspeed > 0) { p1.xspeed -= 16;}
+					else if (p1.xspeed < 0) {p1.xspeed += 16;}
+				}
 			if (e.which == 83){;}
 			
 			if (e.which == 32 || e.which == 87 || e.which == 16) //Spacebar, W key, Shift.
 			{
-				p1.yspeed -= 756;
+				if (p1.yspeed <= 756) {p1.yspeed -= 756;}
+				else {p1.yspeed = -756;}
 			}
 		}
 		//END of Controlling and moving the player - Moore
