@@ -116,12 +116,13 @@ function player(xpos, ypos, myid, mynum)
 			//p1.y = mousey;
 			clearDisplay();
 			testDrawBlackRect();
-			drawCircle(mainCanvas.width / 2, mainCanvas.height / 2, calcDistance(mainCanvas.width / 2, mainCanvas.height / 2, p1.x, p1.y));
-			drawCircleMarker(p1.x, p1.y);
+			//drawCircle(mainCanvas.width / 2, mainCanvas.height / 2, calcDistance(mainCanvas.width / 2, mainCanvas.height / 2, p1.x, p1.y));
+			//drawCircleMarker(p1.x, p1.y);
 			
 			drawImg(p1.x, p1.y, imgbb16);
 			drawRectAtb(p1);
 			
+			/*
 			//Playing around with animated Hexagons.
 			drawHexagon(0, 0);
 			drawHexagonScaled(64, 0, 2);
@@ -131,6 +132,7 @@ function player(xpos, ypos, myid, mynum)
 			countCycles += 1;
 			whichSide = (countCycles % 6) + 1;
 			drawHexagonSideScaled(128, 0, whichSide, 2);
+			*/
 			
 			//Demonstration related text.
 			drawTextSmall(32, 128, "A pale imitation of some aspects of the FFXIII ATB (and an unrelated circle thing)."); 
@@ -140,6 +142,12 @@ function player(xpos, ypos, myid, mynum)
 			}
 			
 			//mainTimer = setTimeout("updateEverything();", timerspeed); //Not necessary when using setInterval to ensure a loop.
+			
+			//And now stuff that only works with the modified page.
+			clearDisplayOfCanvas("decorHexagon");
+			whichSide = Math.floor(Math.random()*6) + 1;
+			//drawHexagonOnCanvas("decorHexagon", 0, 0);
+			drawHexagonSideScaledOnCanvas("decorHexagon", 0, 8, whichSide , 1);
 		}
 		
 		
@@ -297,7 +305,7 @@ function handleKeyboard(e)
 			
 			if (e.which == 32 || e.which == 87 || e.which == 16) //Spacebar, W key, Shift.
 			{
-				if (p1.yspeed <= 756) {p1.yspeed -= 756;}
+				if (p1.yspeed <= 0) {p1.yspeed -= 756;}
 				else {p1.yspeed = -756;}
 			}
 		}
@@ -387,16 +395,48 @@ ctx.arc(95,50,40,0,2*Math.PI);
 ctx.stroke();
 }
 
-function clearDisplay() 
+function clearDisplayOfCanvas(theId)
 {
-	var c=document.getElementById("mainCanvas");
+	var c=document.getElementById(theId);
 	var ctx=c.getContext("2d");
 	ctx.clearRect(0, 0, c.width, c.height);
+}
+
+function clearDisplay() 
+{
+	clearDisplayOfCanvas("mainCanvas");
 }
 
 function drawHexagon(x, y)
 {
 var c=document.getElementById("mainCanvas");
+var ctx=c.getContext("2d");
+//ctx.fillStyle = '#f00';
+ctx.strokeStyle="#FFFFFF";
+ctx.beginPath();
+ctx.moveTo(x + 15, y + 8);
+ctx.lineTo(x + 9, y + 12);
+ctx.lineTo(x + 9, y + 19);
+ctx.lineTo(x + 15, y + 23);
+ctx.lineTo(x + 16, y + 23);
+ctx.lineTo(x + 22, y + 19);
+ctx.lineTo(x + 22, y + 12);
+ctx.lineTo(x + 16, y + 8);
+
+/*
+ctx.moveTo(x + 0, y + 0);
+ctx.lineTo(x + 100, y + 50);
+ctx.lineTo(x + 50, y + 100);
+ctx.lineTo(x + 0, y + 90);
+*/
+ctx.closePath();
+//ctx.fill();
+ctx.stroke();
+}
+
+function drawHexagonOnCanvas(theId, x, y)
+{
+var c=document.getElementById(theId);
 var ctx=c.getContext("2d");
 //ctx.fillStyle = '#f00';
 ctx.strokeStyle="#FFFFFF";
@@ -440,9 +480,9 @@ ctx.closePath();
 ctx.stroke();
 }
 
-function drawHexagonSideScaled(x, y, side , scale)
+function drawHexagonSideScaledOnCanvas(theId, x, y, side , scale)
 {
-var c=document.getElementById("mainCanvas");
+var c=document.getElementById(theId);
 var ctx=c.getContext("2d");
 //ctx.fillStyle = '#f00';
 ctx.strokeStyle="#FFFFFF";
@@ -486,6 +526,11 @@ switch (side)
 	}
 ctx.closePath();
 ctx.stroke();
+}
+
+function drawHexagonSideScaled(x, y, side , scale)
+{
+	drawHexagonSideScaledOnCanvas("mainCanvas", x, y, side , scale)
 }
 
 function drawHexagonSide(x, y, side)
