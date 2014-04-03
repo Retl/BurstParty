@@ -32,9 +32,13 @@
 		var countCycles = 0;
 		mainTimer = setInterval("updateEverything();", timerspeed);
 		var p1 = new player(200, 200, 0, 0); //Keyword new is necessary to instantiate.
+		var theMoveMarker = new moveMarker(200, 200, 0, 0);
 		
 		var imgRipple = new Image;
 		imgRipple.src='./images/ripple.png';
+		
+		var imgCrsr = new Image;
+		imgCrsr.src='./images/boundbox16x16.png';
 		
 		var imgbb16 = new Image;
 		imgbb16.src='./images/fp_downhard_lr.png';

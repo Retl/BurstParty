@@ -10,13 +10,90 @@ var mousex;
 var mousey;
 var atbLength = 640;
 var atbSegments = 8;
+//var theMoveMarker = null;
 
 
 // Keys 1-0: Menu Selection
 // Key Tab: Change Menu.
 // Keys Q E Enter: Cancel? Generic Action? 
 
-function player(xpos, ypos, myid, mynum)
+function moveMarker(xpos, ypos)
+		{
+		if (theMoveMarker == null)
+				{
+				 this.x = xpos;
+				 this.y = ypos;
+				 
+				
+				//Short for Action Point Incrementer.
+				this.isPositionNearby = function(otherX, otherY) 
+				{
+					var result = false;
+					if (distance(this.x, this.y, otherX, otherY) <= 5)
+					{
+						//Given position is within 5 pixels of our own position.
+						result = true;
+					}
+				return result;
+				}
+				
+				this.isPlayerNearby = function()
+				{
+					result = false;
+					if(p1 != null)
+					{
+					result = this.isPositionNearby(p1.x, p1.y);
+					}
+					
+					return result;
+				}
+				
+				
+				this.jumpToPosition = function(newX, newY)
+				{
+					this.x = newX;
+					this.y = newY;
+				}
+				
+				//This is a method that should be called on each object of this type every loop. It's similar to 'step' in Gamemaker or Update() in Unity 3D. - Moore
+				//this.update = update;
+				this.update = function()
+				{
+					if (isPlayerNearby())
+					{
+						//If the player is nearby, deactivate/remove this mouseMarker.
+					}
+					/*
+					if (this.xspeed > 768) {this.xspeed -= 32;} 
+					if (this.xspeed < -768) {this.xspeed += 32;} //This enforces a maximum speed by dropping the speed then ramping back up on hitting the limit. - Moore
+					
+					if (this.yspeed > 2048) {this.yspeed = 2048;}
+					if (this.yspeed < -2048) {this.yspeed = -2048;}
+					
+					//Gravity pulls down.
+					this.yspeed += 40; //Might want to put a toggle based on the input here to make it 40 on low or 160 on holding down / releasing up. 
+				
+					//Each update, we immediately need to update positions relative to speed.
+					this.xsub += this.xspeed;
+					this.ysub += this.yspeed;
+					
+					//Wrapping/clamping Pixel to Subpixel.
+					clampSubPosToMain(this, 256, 0);
+					this.x = wrapAround(this.x, 0, document.getElementById("mainCanvas").width);
+					this.y = wrapAround(this.y, 0, document.getElementById("mainCanvas").width);
+					*/
+					
+				}
+
+				 return this;
+			 }
+			 else
+			 {
+				return theMoveMarker;
+			 }
+		 }
+		 
+		 function player(xpos, ypos, myid, mynum)
 		{
 			 this.x = xpos;
 			 this.y = ypos;
@@ -120,7 +197,8 @@ function player(xpos, ypos, myid, mynum)
 			//drawCircleMarker(p1.x, p1.y);
 			
 			drawImg(p1.x, p1.y, imgbb16);
-			drawRectAtb(p1);
+			
+			//drawRectAtb(p1);
 			
 			/*
 			//Playing around with animated Hexagons.
@@ -135,10 +213,16 @@ function player(xpos, ypos, myid, mynum)
 			*/
 			
 			//Demonstration related text.
-			drawTextSmall(32, 128, "A pale imitation of some aspects of the FFXIII ATB (and an unrelated circle thing)."); 
-			drawTextSmall(32, 144, "Press the 1(!) key to drain 100 points of ACT.");
-			drawTextSmall(32, 160, "Press the Shift key to 'paradigm shift' and get an ACT refresh if you've built up enough.");
+			//drawTextSmall(32, 128, "A pale imitation of some aspects of the FFXIII ATB (and an unrelated circle thing)."); 
+			//drawTextSmall(32, 144, "Press the 1(!) key to drain 100 points of ACT.");
+			//drawTextSmall(32, 160, "Press the Shift key to 'paradigm shift' and get an ACT refresh if you've built up enough.");
 			
+			}
+			
+			if(theMoveMarker != null)
+			{
+				//drawImg(theMoveMarker.x, theMoverMarker.y, imgCrsr);
+				drawImg(p1.x, p1.y, imgCrsr);
 			}
 			
 			//mainTimer = setTimeout("updateEverything();", timerspeed); //Not necessary when using setInterval to ensure a loop.
@@ -163,9 +247,17 @@ function player(xpos, ypos, myid, mynum)
 		{
 			if (e)
 			{
-			noMouseDrag(e);
-			//document.getElementById("testInfoDiv").innerHTML="Mouse click-down at relative position X: " + e.clientX + " Y: " +e.clientY;
-				
+				noMouseDrag(e);
+				//document.getElementById("testInfoDiv").innerHTML="Mouse click-down at relative position X: " + e.clientX + " Y: " +e.clientY;
+				updateMousePosition(e);
+				if (theMoveMarker != null)// placeMoveMarker(e.clientX, e.clientX);
+				{
+					theMoveMarker.jumpToPosition(e.clientX, e.clientX);
+				}
+				else
+				{
+					theMoveMarker = new moveMarker(e.clientX, e.clientX);
+				}
 			}
 		}
 		
@@ -175,6 +267,7 @@ function player(xpos, ypos, myid, mynum)
 			{
 			noMouseDrag(e);
 			//document.getElementById("testInfoDiv").innerHTML="Mouse click-release at relative position X: " + e.clientX + " Y: " +e.clientY;				
+			updateMousePosition(e);
 			}
 		}
 		//END OF USER INPUT HANDLING
@@ -251,6 +344,16 @@ function wrapAround(current, lowEnd, highEnd)
 	}
 	
 	return current;
+}
+
+function distance(x1, y1, x2, y2)
+{
+	var result = 0;
+	var xdist = x2 - x1;
+	var ydist = y2 - y1;
+	result = Math.sqrt(Math.pow(xdist, 2) + Math.pow(ydist, 2)); //Working back from Pythagorean Theorum. 
+	return result;
+	
 }
 
 
