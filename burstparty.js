@@ -69,6 +69,7 @@ function moveMarker(xpos, ypos)
 					if (this.isPlayerNearby())
 					{
 						//If the player is nearby, deactivate/remove this mouseMarker.
+						if (p1 != null) {p1.jump();}
 						theMoveMarker = null;
 					}
 				}
@@ -152,22 +153,14 @@ function moveMarker(xpos, ypos)
 			//Player movement commands
 			this.moveLeft = function()
 			{
-				if (this.isMoveMarkerNearby()) //Consider using a collision-detection method instead?
+				if (this.xspeed > 0)
 				{
-					this.jump();
+					this.xspeed -= 2 * this.accelerationHorizontalRate;
 				}
 				else
 				{
-					if (this.xspeed > 0)
-					{
-						this.xspeed -= 2 * this.accelerationHorizontalRate;
-					}
-					else
-					{
-						this.xspeed -= this.accelerationHorizontalRate;
-					}
+					this.xspeed -= this.accelerationHorizontalRate;
 				}
-				
 			}
 			
 			this.moveRight = function()
