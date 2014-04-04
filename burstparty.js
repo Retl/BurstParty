@@ -36,7 +36,7 @@ function moveMarker(xpos, ypos)
 				this.isPositionNearby = function(otherX, otherY) 
 				{
 					var result = false;
-					if (distance(this.x, this.y, otherX, otherY) <= 5)
+					if (distance(this.x, this.y, otherX, otherY) <= 32)
 					{
 						//Given position is within 5 pixels of our own position.
 						result = true;
@@ -66,30 +66,11 @@ function moveMarker(xpos, ypos)
 				//this.update = update;
 				this.update = function()
 				{
-					if (isPlayerNearby())
+					if (this.isPlayerNearby())
 					{
 						//If the player is nearby, deactivate/remove this mouseMarker.
+						theMoveMarker = null;
 					}
-					/*
-					if (this.xspeed > 768) {this.xspeed -= 32;} 
-					if (this.xspeed < -768) {this.xspeed += 32;} //This enforces a maximum speed by dropping the speed then ramping back up on hitting the limit. - Moore
-					
-					if (this.yspeed > 2048) {this.yspeed = 2048;}
-					if (this.yspeed < -2048) {this.yspeed = -2048;}
-					
-					//Gravity pulls down.
-					this.yspeed += 40; //Might want to put a toggle based on the input here to make it 40 on low or 160 on holding down / releasing up. 
-				
-					//Each update, we immediately need to update positions relative to speed.
-					this.xsub += this.xspeed;
-					this.ysub += this.yspeed;
-					
-					//Wrapping/clamping Pixel to Subpixel.
-					clampSubPosToMain(this, 256, 0);
-					this.x = wrapAround(this.x, 0, document.getElementById("mainCanvas").width);
-					this.y = wrapAround(this.y, 0, document.getElementById("mainCanvas").width);
-					*/
-					
 				}
 				
 				this.draw = function()
@@ -109,6 +90,11 @@ function moveMarker(xpos, ypos)
 		 
 		 function player(xpos, ypos, myid, mynum)
 		{
+			//Properties that shouldn't change after the object is instantiated.
+			this.accelerationHorizontalRate = 16;
+			 
+			 
+			 //Properties that change frequently.
 			 this.x = xpos;
 			 this.y = ypos;
 			 this.xsub = 0;
@@ -140,14 +126,109 @@ function moveMarker(xpos, ypos)
 			return this.ap;
 			}
 			
+			//Player-specific utilities
+			this.isPositionNearby = function(otherX, otherY)  //Is there a better way to give this to player and move markers and stuff? Maybe via subclass?
+				{
+					var result = false;
+					if (distance(this.x, this.y, otherX, otherY) <= 32)
+					{
+						//Given position is within 16 pixels of our own position.
+						result = true;
+					}
+				return result;
+				}
+				
+				this.isMoveMarkerNearby = function()
+				{
+					result = false;
+					if(theMoveMarker != null)
+					{
+						result = this.isPositionNearby(theMoveMarker.x, theMoveMarker.y);
+					}
+					
+					return result;
+				}
+			
+			//Player movement commands
+			this.moveLeft = function()
+			{
+				if (this.isMoveMarkerNearby()) //Consider using a collision-detection method instead?
+				{
+					this.jump();
+				}
+				else
+				{
+					if (this.xspeed > 0)
+					{
+						this.xspeed -= 2 * this.accelerationHorizontalRate;
+					}
+					else
+					{
+						this.xspeed -= this.accelerationHorizontalRate;
+					}
+				}
+				
+			}
+			
 			this.moveRight = function()
 			{
-				
+				if (this.xspeed < 0)
+				{
+					this.xspeed += 2 * this.accelerationHorizontalRate;
+				}
+				else
+				{
+					this.xspeed += this.accelerationHorizontalRate;
+				}
+			}
+			
+			this.slowDownNeutral = function()
+			{
+				if (this.xspeed > 0) { this.xspeed -= 16;}
+				else if (this.xspeed < 0) {this.xspeed += 16;}
+			}
+			
+			this.jump = function()
+			{
+				if (this.yspeed <= 0) {this.yspeed -= 756;}
+				else {this.yspeed = -756;}
+			}
+			
+			this.quickDescent = function()
+			{
+				//If the player was jumping and then stopped jumping, they descend faster. Following theMoveMarker ignores this.
+			}
+			
+			this.followMoveMarker = function()
+			{
+				if (theMoveMarker != null)
+				{
+					if (this.x < theMoveMarker.x)
+					{
+						this.moveRight();
+					}
+					else
+					{
+						this.moveLeft();
+					}
+				}
 			}
 			
 			//This is a method that should be called on each object of this type every loop. It's similar to 'step' in Gamemaker or Update() in Unity 3D. - Moore
 			this.update = function()
 			{
+				
+				//If there's a move marker, ignore keyboard input. If there isn't, allow keyboard input.
+				if (theMoveMarker != null)
+				{
+					this.followMoveMarker();
+				}
+				else
+				{
+					this.processInput();
+				}
+				
+			
 				if (this.xspeed > 768) {this.xspeed -= 32;} 
 				if (this.xspeed < -768) {this.xspeed += 32;} //This enforces a maximum speed by dropping the speed then ramping back up on hitting the limit. - Moore
 				
@@ -166,6 +247,24 @@ function moveMarker(xpos, ypos)
 				this.x = wrapAround(this.x, 0, document.getElementById("mainCanvas").width);
 				this.y = wrapAround(this.y, 0, document.getElementById("mainCanvas").width);
 				
+			}
+			
+			this.processInput = function()
+			{
+				//START Controlling and moving the player around - Moore
+				if (keyCodeArray[65] > 0){this.moveLeft();} // A key
+				if (keyCodeArray[68] > 0){this.moveRight();} // D key
+				if (!(keyCodeArray[65] > 0 || keyCodeArray[68] > 0)) //Neither A or D
+					{
+						this.slowDownNeutral();
+					}
+				//if (e.which == 83){;} - I forgot which key this was, anyway.
+				
+				if (keyCodeArray[32] > 0 || keyCodeArray[87] > 0 || keyCodeArray[16] > 0) //Spacebar, W key, Shift.
+				{
+					this.jump();
+				}
+				//END of Controlling and moving the player - Moore
 			}
 			
 			this.draw = function()
@@ -243,15 +342,23 @@ function moveMarker(xpos, ypos)
 			//drawTextSmall(32, 144, "Press the 1(!) key to drain 100 points of ACT.");
 			//drawTextSmall(32, 160, "Press the Shift key to 'paradigm shift' and get an ACT refresh if you've built up enough.");
 			
-			if (debugMode) {drawTextSmall(32, 128, "Content of input array: " + keyCodeArray.join()); }
-			
-			}
-			
-			if(theMoveMarker != null)
+			//Display things to help in debugging the game.
+			if (debugMode) 
 			{
-				//drawImg(theMoveMarker.x, theMoverMarker.y, imgCrsr);
-				theMoveMarker.draw();
+				drawTextSmall(32, 128, "Content of input array: " + keyCodeArray.join()); 
+				if (theMoveMarker != null && p1 != null) 
+				{
+					drawTextSmall(32, 144, "IsPlayerNearby(); " + theMoveMarker.isPlayerNearby());
+					drawTextSmall(32, 160, "IsPositionNearby(); " + theMoveMarker.isPositionNearby(p1.x, p1.y));
+					drawTextSmall(32, 176, "distance() <= 5; " + distance(theMoveMarker.x, theMoveMarker.y, p1.x, p1.y) <= 16);
+					drawTextSmall(32, 194, "distance(); " + distance(theMoveMarker.x, theMoveMarker.y, p1.x, p1.y));
+				}
 			}
+			
+			}
+			
+			if(theMoveMarker != null){theMoveMarker.update();} //Gotta check again after the update, as update can unset it before drawing.
+			if(theMoveMarker != null){theMoveMarker.draw();}
 			
 			//mainTimer = setTimeout("updateEverything();", timerspeed); //Not necessary when using setInterval to ensure a loop.
 			
@@ -438,25 +545,7 @@ function handleKeyboard(e)
 			;
 		}
 		
-		//START Controlling and moving the player around - Moore
-		if (p1 != null)
-		{
-			if (e.which == 65){p1.xspeed -= 16;} // A key
-			if (e.which == 68){p1.xspeed += 16;} // D key
-			if (e.which != 68 && e.which != 65) //Neither A or D
-				{
-					if (p1.xspeed > 0) { p1.xspeed -= 16;}
-					else if (p1.xspeed < 0) {p1.xspeed += 16;}
-				}
-			if (e.which == 83){;}
-			
-			if (e.which == 32 || e.which == 87 || e.which == 16) //Spacebar, W key, Shift.
-			{
-				if (p1.yspeed <= 0) {p1.yspeed -= 756;}
-				else {p1.yspeed = -756;}
-			}
-		}
-		//END of Controlling and moving the player - Moore
+		
 		
 		
 		//Getting the Reserve AP is an All-or-Nothing bid.
