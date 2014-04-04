@@ -84,6 +84,13 @@ function moveMarker(xpos, ypos)
 					*/
 					
 				}
+				
+				this.draw = function()
+				{
+					var offsetX = imgCrsr.width / 2;
+					var offsetY = imgCrsr.height / 2;
+					drawImg(this.x - offsetX, this.y - offsetY, imgCrsr);
+				}
 
 				 return this;
 			 }
@@ -149,6 +156,14 @@ function moveMarker(xpos, ypos)
 				this.y = wrapAround(this.y, 0, document.getElementById("mainCanvas").width);
 				
 			}
+			
+			this.draw = function()
+				{
+					//Our offset for this one is horizontal center, bottom of image.
+					var offsetX = imgCrsr.width / 2;
+					var offsetY = imgCrsr.height;
+					drawImg(this.x - offsetX, this.y - offsetY, imgbb16);
+				}
 
 			 return this;
 			 
@@ -196,7 +211,7 @@ function moveMarker(xpos, ypos)
 			//drawCircle(mainCanvas.width / 2, mainCanvas.height / 2, calcDistance(mainCanvas.width / 2, mainCanvas.height / 2, p1.x, p1.y));
 			//drawCircleMarker(p1.x, p1.y);
 			
-			drawImg(p1.x, p1.y, imgbb16);
+			p1.draw();
 			
 			//drawRectAtb(p1);
 			
@@ -222,7 +237,7 @@ function moveMarker(xpos, ypos)
 			if(theMoveMarker != null)
 			{
 				//drawImg(theMoveMarker.x, theMoverMarker.y, imgCrsr);
-				drawImg(p1.x, p1.y, imgCrsr);
+				theMoveMarker.draw();
 			}
 			
 			//mainTimer = setTimeout("updateEverything();", timerspeed); //Not necessary when using setInterval to ensure a loop.
@@ -252,11 +267,11 @@ function moveMarker(xpos, ypos)
 				updateMousePosition(e);
 				if (theMoveMarker != null)// placeMoveMarker(e.clientX, e.clientX);
 				{
-					theMoveMarker.jumpToPosition(e.clientX, e.clientX);
+					theMoveMarker.jumpToPosition(mousex, mousey);
 				}
 				else
 				{
-					theMoveMarker = new moveMarker(e.clientX, e.clientX);
+					theMoveMarker = new moveMarker(mousex, mousey);
 				}
 			}
 		}
@@ -360,8 +375,17 @@ function distance(x1, y1, x2, y2)
 //Free Input Methods
 function updateMousePosition(e)
 {
-	mousex = e.clientX;
-	mousey = e.clientY;
+	if (mainCanvas != null)
+	{
+		mousex = (e.clientX + document.body.scrollLeft) - mainCanvas.offsetLeft;
+		mousey = (e.clientY + document.body.scrollTop) - mainCanvas.offsetTop;
+	}
+	else
+	{
+		mousex = e.clientX + document.body.scrollLeft;
+		mousey = e.clientY + document.body.scrollTop;
+
+	}
 }	
 
 //HANDLING USER INPUT
