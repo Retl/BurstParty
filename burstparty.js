@@ -6,6 +6,8 @@
 // Purpose: Same as listed in .htm. This is a chunk of the JS that makes it go.
 
 //Objects
+var debugMode = false;
+
 var mousex;
 var mousey;
 var atbLength = 640;
@@ -144,8 +146,7 @@ function moveMarker(xpos, ypos)
 			}
 			
 			//This is a method that should be called on each object of this type every loop. It's similar to 'step' in Gamemaker or Update() in Unity 3D. - Moore
-			this.update = update;
-			function update()
+			this.update = function()
 			{
 				if (this.xspeed > 768) {this.xspeed -= 32;} 
 				if (this.xspeed < -768) {this.xspeed += 32;} //This enforces a maximum speed by dropping the speed then ramping back up on hitting the limit. - Moore
@@ -242,7 +243,7 @@ function moveMarker(xpos, ypos)
 			//drawTextSmall(32, 144, "Press the 1(!) key to drain 100 points of ACT.");
 			//drawTextSmall(32, 160, "Press the Shift key to 'paradigm shift' and get an ACT refresh if you've built up enough.");
 			
-			drawTextSmall(32, 128, "Content of input array: " + keyCodeArray.join()); 
+			if (debugMode) {drawTextSmall(32, 128, "Content of input array: " + keyCodeArray.join()); }
 			
 			}
 			
@@ -259,6 +260,11 @@ function moveMarker(xpos, ypos)
 			whichSide = Math.floor(Math.random()*6) + 1;
 			//drawHexagonOnCanvas("decorHexagon", 0, 0);
 			drawHexagonSideScaledOnCanvas("decorHexagon", 0, 8, whichSide , 1);
+			
+			//Process the inputs captured...
+			processSpecialKeys();
+			//NOTE: All input processing should be done before you end the input cycle.
+			endInputCycle();
 		}
 		
 		
@@ -479,18 +485,8 @@ function handleKeyPress(e)
 {
 	if (e && e.which)
 	{
-		if (keyCodeArray[e.keyCode] == 2) //2 indicates the key has just been pressed.
-		{
-			keyCodeArray[e.keyCode] = 1; //Then we're holding it.
-		}
-		else if (keyCodeArray[e.keyCode] == 0) // If the key is currently not-pressed.
-		{
-			keyCodeArray[e.keyCode] = 2; //Set the key as 'just pressed'.
-		}
-		else
-		{
-			keyCodeArray[e.keyCode] = 1; //For any other scenario, just set the key as pressed.
-		}
+		if (keyCodeArray[e.keyCode] == 0) {keyCodeArray[e.keyCode] = 2;} //Set the key as 'just pressed'.
+		//NOTE: Since we handle this with each received input, we end up with a problem where holding down a key sends this over and over.
 	}
 }
 
@@ -499,6 +495,25 @@ function handleKeyRelease(e)
 	if (e && e.which)
 	{
 		keyCodeArray[e.keyCode] = 0;
+	}
+}
+
+function processSpecialKeys()
+{
+	if (keyCodeArray[84] == 2) 
+	{
+		debugMode = !debugMode;
+	}
+}
+
+function endInputCycle()
+{
+	if (keyCodeArray != null)
+	{
+		for (i = 1; i < keyCodeArray.length; i++)
+		{
+			if (keyCodeArray[i] == 2) {keyCodeArray[i] = 1;}
+		}
 	}
 }
 
