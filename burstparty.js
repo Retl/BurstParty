@@ -10,6 +10,11 @@ var mousex;
 var mousey;
 var atbLength = 640;
 var atbSegments = 8;
+
+var theLastE;
+
+var keyCodeArray = []; //Index corresponds to keycode. Value of 0 is unpressed. Value of 1 is pressed. Value of 2 is just-pressed.
+
 //var theMoveMarker = null;
 
 
@@ -133,6 +138,11 @@ function moveMarker(xpos, ypos)
 			return this.ap;
 			}
 			
+			this.moveRight = function()
+			{
+				
+			}
+			
 			//This is a method that should be called on each object of this type every loop. It's similar to 'step' in Gamemaker or Update() in Unity 3D. - Moore
 			this.update = update;
 			function update()
@@ -231,6 +241,8 @@ function moveMarker(xpos, ypos)
 			//drawTextSmall(32, 128, "A pale imitation of some aspects of the FFXIII ATB (and an unrelated circle thing)."); 
 			//drawTextSmall(32, 144, "Press the 1(!) key to drain 100 points of ACT.");
 			//drawTextSmall(32, 160, "Press the Shift key to 'paradigm shift' and get an ACT refresh if you've built up enough.");
+			
+			drawTextSmall(32, 128, "Content of input array: " + keyCodeArray.join()); 
 			
 			}
 			
@@ -395,6 +407,8 @@ function handleKeyboard(e)
 	if (e && e.which)
 	{
 	
+	theLastE = e; //TESTING LINE DELETEME
+	
 	//document.getElementById("testInfoDiv").innerHTML="Last recieved keycode from keypress: " + e.which;
 	
 	//P1 Exclusive Section
@@ -460,6 +474,34 @@ function handleKeyboard(e)
 		
 	}
 }
+
+function handleKeyPress(e)
+{
+	if (e && e.which)
+	{
+		if (keyCodeArray[e.keyCode] == 2) //2 indicates the key has just been pressed.
+		{
+			keyCodeArray[e.keyCode] = 1; //Then we're holding it.
+		}
+		else if (keyCodeArray[e.keyCode] == 0) // If the key is currently not-pressed.
+		{
+			keyCodeArray[e.keyCode] = 2; //Set the key as 'just pressed'.
+		}
+		else
+		{
+			keyCodeArray[e.keyCode] = 1; //For any other scenario, just set the key as pressed.
+		}
+	}
+}
+
+function handleKeyRelease(e)
+{
+	if (e && e.which)
+	{
+		keyCodeArray[e.keyCode] = 0;
+	}
+}
+
 //END OF USER INPUT HANDLING
 	
 //Free Graphical Methods
