@@ -81,6 +81,22 @@ table
 	height:256px;
 }
 
+.blueGlow
+{
+	text-align:center;
+	font-style:italic;
+	color: #63c0f5;
+	text-shadow: 0 0 5px rgba(104, 182, 255, 0.5);
+}
+
+.pinkGlow
+{
+	text-align:center;
+	font-style:italic;
+	color: #fab3d1;
+	text-shadow: 0 0 5px rgba(250, 179, 209, 0.5);
+}
+
 footer
 {
 	font-size:8pt;
