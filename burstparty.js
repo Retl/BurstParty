@@ -102,6 +102,7 @@ function moveMarker(xpos, ypos)
 			 this.ysub = 0;
 			 this.xspeed = -5; //In Subpixels.
 			 this.yspeed = 1; //In Subpixels.
+			 this.canJump = true;
 			 this.myid = myid;
 			 this.mynum = mynum;
 			 
@@ -183,8 +184,12 @@ function moveMarker(xpos, ypos)
 			
 			this.jump = function()
 			{
-				if (this.yspeed <= 0) {this.yspeed -= 756;}
-				else {this.yspeed = -756;}
+				if (this.canJump)
+				{
+					this.canJump = false;
+					if (this.yspeed <= 0) {this.yspeed -= 756;}
+					else {this.yspeed = -756;}
+				}
 			}
 			
 			this.quickDescent = function()
@@ -229,7 +234,20 @@ function moveMarker(xpos, ypos)
 				if (this.yspeed < -2048) {this.yspeed = -2048;}
 				
 				//Gravity pulls down.
-				this.yspeed += 40; //Might want to put a toggle based on the input here to make it 40 on low or 160 on holding down / releasing up. 
+				//If we're not at the bottom and there is no platform below us, let gravity do what it does.
+				if (this.y < 320)
+				{
+					this.yspeed += 40; //Might want to put a toggle based on the input here to make it 40 on low or 160 on holding down / releasing up. 
+				}
+				else
+				{
+				this.canJump = true;
+					if (this.yspeed > 0)
+					{
+						this.yspeed = 0;
+						this.ysub = 0;
+					}
+				}
 			
 				//Each update, we immediately need to update positions relative to speed.
 				this.xsub += this.xspeed;
@@ -253,7 +271,7 @@ function moveMarker(xpos, ypos)
 					}
 				//if (e.which == 83){;} - I forgot which key this was, anyway.
 				
-				if (keyCodeArray[32] > 0 || keyCodeArray[87] > 0 || keyCodeArray[16] > 0) //Spacebar, W key, Shift.
+				if (keyCodeArray[32] > 0 || keyCodeArray[87] == 2 || keyCodeArray[16] > 0) //Spacebar, W key, Shift.
 				{
 					this.jump();
 				}
