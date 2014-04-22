@@ -1,7 +1,7 @@
 // File: burstparty.js
 // Author: Carlis Moore
 // Date of Creation: 20 February 2014
-// Date of Last Update: 8 March 2014
+// Date of Last Update: 21 April 2014
 // Base Code: http://retl.info/experimental/ffxiiiatb.js
 // Purpose: Same as listed in .htm. This is a chunk of the JS that makes it go.
 
@@ -235,7 +235,7 @@ function moveMarker(xpos, ypos)
 				
 				//Gravity pulls down.
 				//If we're not at the bottom and there is no platform below us, let gravity do what it does.
-				if (this.y < 320)
+				if (this.y < FLOORHEIGHT)
 				{
 					this.yspeed += 40; //Might want to put a toggle based on the input here to make it 40 on low or 160 on holding down / releasing up. 
 				}
@@ -289,6 +289,72 @@ function moveMarker(xpos, ypos)
 			 return this;
 			 
 		 }
+		
+		//DEFINITION FOR THE BALLOON OBJECTS.
+		function balloon(xpos, ypos)
+		{
+			 this.x = xpos;
+			 this.y = ypos;
+			 this.visible = true;
+			 this.active = true;
+			 
+			this.isPositionNearby = function(otherX, otherY) 
+			{
+				var result = false;
+				if (distance(this.x, this.y, otherX, otherY) <= 32)
+				{
+					//Given position is within 5 pixels of our own position.
+					result = true;
+				}
+			return result;
+			}
+			
+			this.isPlayerNearby = function()
+			{
+				result = false;
+				if(p1 != null)
+				{
+				result = this.isPositionNearby(p1.x, p1.y);
+				}
+				
+				return result;
+			}
+			
+			
+			this.jumpToPosition = function(newX, newY)
+			{
+				this.x = newX;
+				this.y = newY;
+			}
+			
+			//This is a method that should be called on each object of this type every loop. It's similar to 'step' in Gamemaker or Update() in Unity 3D. - Moore
+			//this.update = update;
+			this.update = function()
+			{
+				if (this.active)
+				{
+					if (this.isPlayerNearby())
+					{
+						//If the player is nearby, deactivate/remove this balloon.
+						score += 10;
+						this.active = false;
+					}
+				}
+			}
+			
+			this.draw = function()
+			{
+				if (this.visible && this.active)
+				{
+					var offsetX = imgBln1.width / 2;
+					var offsetY = imgBln1.height / 2;
+					drawImg(this.x - offsetX, this.y - offsetY, imgBln1);
+				}
+			}
+
+			 return this;
+		 }
+		 
 //Free Methods
 // This is more or less our "Main" function, or the main LOOP rather.
 		
@@ -320,6 +386,8 @@ function moveMarker(xpos, ypos)
 			main = setTimeout("updateEverything();", timerspeed);
 			*/
 			
+			
+			
 			if(p1 != null)
 			{
 			p1.apInc();
@@ -331,6 +399,12 @@ function moveMarker(xpos, ypos)
 			testDrawBlackRect();
 			//drawCircle(mainCanvas.width / 2, mainCanvas.height / 2, calcDistance(mainCanvas.width / 2, mainCanvas.height / 2, p1.x, p1.y));
 			//drawCircleMarker(p1.x, p1.y);
+			
+			if (score > highscore) {highscore = score;} //Updates the highscore after it has been broken.
+			
+			drawTextSmall(32, 32, "Highscore: " + highscore);
+			drawTextSmall(32, 48, "Score: " +score);
+			
 			
 			p1.draw();
 			
@@ -370,6 +444,15 @@ function moveMarker(xpos, ypos)
 			
 			if(theMoveMarker != null){theMoveMarker.update();} //Gotta check again after the update, as update can unset it before drawing.
 			if(theMoveMarker != null){theMoveMarker.draw();}
+			
+			for (i = 0; i < 10 /*blnArray.length()*/; i++)
+			{
+				if (blnArray[i] != null)
+				{
+					blnArray[i].update();
+					blnArray[i].draw();
+				}
+			}
 			
 			//mainTimer = setTimeout("updateEverything();", timerspeed); //Not necessary when using setInterval to ensure a loop.
 			
