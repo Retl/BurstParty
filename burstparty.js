@@ -1,7 +1,7 @@
 // File: burstparty.js
 // Author: Carlis Moore
 // Date of Creation: 20 February 2014
-// Date of Last Update: 21 April 2014
+// Date of Last Update: 26 April 2014
 // Base Code: http://retl.info/experimental/ffxiiiatb.js
 // Purpose: Same as listed in .htm. This is a chunk of the JS that makes it go.
 
@@ -297,6 +297,7 @@ function moveMarker(xpos, ypos)
 			 this.y = ypos;
 			 this.visible = true;
 			 this.active = true;
+			 this.oldx = this.x;
 			 
 			this.isPositionNearby = function(otherX, otherY) 
 			{
@@ -321,6 +322,12 @@ function moveMarker(xpos, ypos)
 			}
 			
 			
+			this.jumpToRandomPosition = function()
+			{
+				this.tempX = Math.floor(Math.random() * document.getElementById("mainCanvas").width - 64) + 32;
+				this.jumpToPosition(this.tempX, this.y);
+			}
+			
 			this.jumpToPosition = function(newX, newY)
 			{
 				this.x = newX;
@@ -335,9 +342,10 @@ function moveMarker(xpos, ypos)
 				{
 					if (this.isPlayerNearby())
 					{
-						//If the player is nearby, deactivate/remove this balloon.
+						//If the player is nearby, move this balloon, and give points.
 						score += 10;
-						this.active = false;
+						this.jumpToRandomPosition();
+						//this.active = false;
 					}
 				}
 			}
