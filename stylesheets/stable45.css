@@ -47,12 +47,14 @@ Permissions: If you want to use elements from this page, please ask me first. I'
 {
 	height:100px;
 	padding:6px;
+	border-radius: 5px;
 }
 
 .settlementDiv
 {
 	height:200px;
 	padding:6px;
+	border-radius: 5px;
 }
 
 a:hover.hexButton
@@ -100,6 +102,11 @@ table
 footer
 {
 	font-size:8pt;
+	text-align:center;
+}
+
+.center
+{
 	text-align:center;
 }
 
