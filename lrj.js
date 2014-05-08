@@ -280,10 +280,7 @@ function moveMarker(xpos, ypos)
 			
 			this.draw = function()
 				{
-					//Our offset for this one is horizontal center, bottom of image.
-					var offsetX = imgCrsr.width / 2;
-					var offsetY = imgCrsr.height;
-					drawImg(this.x - offsetX, this.y - offsetY, imgbb16);
+					drawPixel(this.x, this.y, "#ff9f00");
 				}
 
 			 return this;
@@ -711,6 +708,20 @@ function endInputCycle()
 //END OF USER INPUT HANDLING
 	
 //Free Graphical Methods
+
+function drawPixel(pixelX, pixelY, col)
+{
+	drawRect(pixelX, pixelY, 1, 1, col);
+}
+
+function drawRect(x, y, w, h, col) 
+{
+	var c=document.getElementById("mainCanvas");
+	var ctx=c.getContext("2d");
+	ctx.fillStyle=col;
+	ctx.fillRect(x,y,w,h);
+}
+
 function testDrawRect() 
 {
 	var c=document.getElementById("mainCanvas");
